@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
 import { keys } from './keys';
 
 // keys file is in gitignore to protect data
@@ -11,6 +13,8 @@ const firebaseConfig = {
   appId: keys.appId,
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
 
-export { firebaseApp };
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+
+export { firebaseApp, db };
