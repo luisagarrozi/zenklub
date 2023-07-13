@@ -1,17 +1,7 @@
 import React from "react";
 import "./Profile.css";
-import { Timestamp } from 'firebase/firestore';
-
-export interface Review {
-  reviewer: string;
-  rating: number;
-  review: string;
-}
-
-export interface Schedule {
-  available: boolean;
-  date: Timestamp;
-}
+import Reviews, { Review } from "../Reviews/Reviews"
+import { Schedule } from "../Schedule/Schedule"
 export interface Professional {
   id: string;
   name: string;
@@ -47,18 +37,20 @@ const Profile: React.FC<ProfessionalItemProps> = ({ professional }) => {
               </div>
               <div className="profile_location"> | {professional.city}</div>
             </h3>
-            <p className="profile_price_and_sessionTime">
+            <Reviews reviews={professional.reviews} />
+            <div className="profile_price_and_sessionTime">
               <div className="profile_price"> R${professional.price}</div>
               <div className="profile_sessionTime">
                 {" "}
                 / {professional.sessionTime} minutes
               </div>
-            </p>
+            </div>
           </div>
         </div>
         <p className="profile_description">{professional.description}</p>
       </div>
-      <div className="calendar">{/* Calendar component here */}</div>
+      <div className="schedule">
+      </div>
     </div>
   );
 };

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../../utils/firebase';
 import { query, getDocs, QueryDocumentSnapshot, collectionGroup, collection } from 'firebase/firestore';
-import Profile, { Professional, Review, Schedule } from '../Profile/Profile';
+import Profile, { Professional} from '../Profile/Profile';
+import { Review } from "../Reviews/Reviews"
+import { Schedule } from "../Schedule/Schedule"
+
 import './Professionals.css';
 
 const Professionals: React.FC = () => {
