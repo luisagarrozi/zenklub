@@ -1,0 +1,63 @@
+.profile-container {
+  margin: 0 15px 34px;
+  padding: 34px 20px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px #0000001a, 0 3px 10px #0000001a;
+}
+
+.profile {
+  display: flex;
+  color: #4d5c65;
+  flex-direction: column;
+  width: 60%;
+}
+
+.profile_top {
+  display: flex;
+}
+
+.profile_information {
+  padding-left: 10px;
+}
+
+.profile_avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 90px;
+}
+
+.profile_name, .profile_profession_and_location {
+  margin: 0 0 5px;
+  display: flex;
+  align-items: center;
+}
+.profile_name {
+  font-size: 22px;
+}
+
+.profile_profession {
+ color: #6732D1;
+ text-transform: uppercase;
+ font-size: 16px; 
+ margin-right: 3px;
+}
+
+.profile_location {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.profile_price_and_sessionTime {
+  display: flex;
+  margin: 0;
+  font-weight: 700;
+  align-items: center;
+}
+
+.profile_price {
+  margin-right: 5px;
+}
+
+.profile_sessionTime {
+  font-size: 14px;
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { db } from '../../utils/firebase';
 import { collection, query, getDocs, QueryDocumentSnapshot } from "firebase/firestore";
 import Profile, { Professional } from '../Profile/Profile';
+import './Professionals.css'
 
 
 const Professionals: React.FC = () => {
@@ -27,7 +28,7 @@ const Professionals: React.FC = () => {
   }, []);
 
   return (
-    <div className="professional-list">
+    <div className="professionals-list">
       {professionals.map((professional) => (
         <Profile key={professional.id} professional={professional} />
       ))}

@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import "./Profile.css";
 
 export interface Professional {
   id: string;
@@ -19,17 +20,32 @@ const Profile: React.FC<ProfessionalItemProps> = ({ professional }) => {
   return (
     <div className="profile-container">
       <div className="profile">
-        <img src={professional.avatar} alt={professional.name} />
-        <h2>{professional.name}</h2>
-        <h3>{professional.profession}</h3>
-        <p>{professional.city}</p>
-        <p>Price: ${professional.price}</p>
-        <p>Duration: {professional.sessionTime} minutes</p>
-        <p>{professional.description}</p>
+        <div className="profile_top">
+          <img
+            src={professional.avatar}
+            alt={professional.name}
+            className="profile_avatar"
+          />
+          <div className="profile_information">
+            <h2 className="profile_name">{professional.name}</h2>
+            <h3 className="profile_profession_and_location">
+              <div className="profile_profession">
+                {professional.profession}
+              </div>
+              <div className="profile_location"> | {professional.city}</div>
+            </h3>
+            <p className="profile_price_and_sessionTime">
+              <div className="profile_price"> R${professional.price}</div>
+              <div className="profile_sessionTime">
+                {" "}
+                / {professional.sessionTime} minutes
+              </div>
+            </p>
+          </div>
+        </div>
+        <p className="profile_description">{professional.description}</p>
       </div>
-      <div className="calendar">
-        {/* Calendar component here */}
-      </div>
+      <div className="calendar">{/* Calendar component here */}</div>
     </div>
   );
 };
