@@ -1,7 +1,7 @@
 import React from "react";
 import "./Profile.css";
 import Reviews, { Review } from "../Reviews/Reviews"
-import { Schedule } from "../Schedule/Schedule"
+import Schedule, { Dates } from "../Schedule/Schedule"
 export interface Professional {
   id: string;
   name: string;
@@ -12,7 +12,7 @@ export interface Professional {
   avatar: string;
   description: string;
   reviews: Review[];
-  schedule: Schedule[];
+  schedule: Dates[];
 }
 
 interface ProfessionalItemProps {
@@ -50,6 +50,7 @@ const Profile: React.FC<ProfessionalItemProps> = ({ professional }) => {
         <p className="profile_description">{professional.description}</p>
       </div>
       <div className="schedule">
+        <Schedule schedule={professional.schedule}/>
       </div>
     </div>
   );

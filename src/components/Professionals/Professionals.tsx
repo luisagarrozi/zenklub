@@ -3,7 +3,7 @@ import { db } from '../../utils/firebase';
 import { query, getDocs, QueryDocumentSnapshot, collectionGroup, collection } from 'firebase/firestore';
 import Profile, { Professional} from '../Profile/Profile';
 import { Review } from "../Reviews/Reviews"
-import { Schedule } from "../Schedule/Schedule"
+import { Dates } from "../Schedule/Schedule"
 
 import './Professionals.css';
 
@@ -21,7 +21,7 @@ const Professionals: React.FC = () => {
           (doc: QueryDocumentSnapshot) => ({
             ...(doc.data() as Professional),
             reviews: [] as Review[],
-            schedule: [] as Schedule[],
+            schedule: [] as Dates[],
           })
         );
 
@@ -44,7 +44,7 @@ const Professionals: React.FC = () => {
             const professionalIndex = professionalsData.findIndex((prof) => prof.id === professionalId);
 
             if (professionalIndex !== -1) {
-              professionalsData[professionalIndex].schedule.push(doc.data() as Schedule);
+              professionalsData[professionalIndex].schedule.push(doc.data() as Dates);
             }
           }
         });
