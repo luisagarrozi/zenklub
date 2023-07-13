@@ -1,6 +1,17 @@
 import React from "react";
 import "./Profile.css";
+import { Timestamp } from 'firebase/firestore';
 
+export interface Review {
+  reviewer: string;
+  rating: number;
+  review: string;
+}
+
+export interface Schedule {
+  available: boolean;
+  date: Timestamp;
+}
 export interface Professional {
   id: string;
   name: string;
@@ -10,6 +21,8 @@ export interface Professional {
   sessionTime: number;
   avatar: string;
   description: string;
+  reviews: Review[];
+  schedule: Schedule[];
 }
 
 interface ProfessionalItemProps {
