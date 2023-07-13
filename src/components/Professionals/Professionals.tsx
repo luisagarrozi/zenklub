@@ -49,7 +49,6 @@ const Professionals: React.FC = () => {
           }
         });
 
-        console.log(professionalsData);
         setProfessionals(professionalsData);
       } catch (error) {
         console.log('Error fetching professionals:', error);

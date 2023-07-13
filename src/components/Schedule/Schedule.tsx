@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Timestamp } from "firebase/firestore";
+import "./Schedule.css";
 
 export interface Dates {
   available: boolean;
@@ -10,63 +11,92 @@ interface ScheduleProps {
   schedule: Dates[];
 }
 
-interface ScheduleByDay {
-  [day: string]: Dates[];
-}
-
 const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
+  const nextMonth: Date[] = [];
+  const currentDate = new Date();
+  const datesArray: Date[] = [];
   const [startDateIndex, setStartDateIndex] = useState(0);
-  const scheduleByDay: ScheduleByDay = {};
 
-  schedule.forEach((date) => {
-    const day = date.date
-      .toDate()
-      .toLocaleDateString("pt-BR", { weekday: "long" });
-    if (!scheduleByDay[day]) {
-      scheduleByDay[day] = [];
-    }
-    scheduleByDay[day].push(date);
+  for (let i = 0; i < 30; i++) {
+    const date = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + i + 1
+    );
+    nextMonth.push(date);
+  }
+
+  const timeRange = [
+    "8:00",
+    "8:30",
+    "9:00",
+    "9:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "14:00",
+    "14:30",
+    "15:00",
+  ];
+
+  const modifiedSchedule = schedule.map(({ available, date }) => {
+    const convertedDate = date.toDate();
+
+    return {
+      available,
+      date: convertedDate,
+    };
   });
+
   const handleNextDates = () => {
-    if (startDateIndex < Object.keys(scheduleByDay).length - 4) {
-      setStartDateIndex(startDateIndex + 1);
+    if (startDateIndex < nextMonth.length - 4) {
+      setStartDateIndex(startDateIndex + 4);
     }
   };
 
   const handlePreviousDates = () => {
-    if (startDateIndex > 0) {
-      setStartDateIndex(startDateIndex - 1);
+    if (startDateIndex >= 4) {
+      setStartDateIndex(startDateIndex - 4);
     }
   };
 
   const renderDates = () => {
-    const datesArray = Object.entries(scheduleByDay);
-    const visibleDates = datesArray.slice(startDateIndex, startDateIndex + 4);
-  
-    return visibleDates.map(([day, dates]) => {
-      const sortedDates = [...dates].sort((a, b) => {
-        const timeA = a.date.toDate().getTime();
-        const timeB = b.date.toDate().getTime();
-        return timeA - timeB;
+    const visibleTimes = nextMonth.slice(startDateIndex, startDateIndex + 4);
+
+    return visibleTimes.map((time) => {
+      const formattedDate = time.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
       });
-  
+      const formattedWeekday = time.toLocaleDateString("en-US", {
+        weekday: "short",
+      });
+
+      const timesList = timeRange.map((timeItem) => {
+        const isAvailable = modifiedSchedule.find(
+          (scheduleItem) =>
+            scheduleItem.date.getDate() === time.getDate() &&
+            scheduleItem.date.getHours() === parseInt(timeItem.split(":")[0], 10)
+        );
+      
+        return (
+          <div
+            key={timeItem}
+            className={`schedule_time_slot ${
+              isAvailable ? "available" : "unavailable"
+            }`}
+          >
+            {isAvailable ? timeItem : "-"}
+          </div>
+        );
+      });
+
       return (
-        <div key={day} className="schedule_day">
-          <h2>{day}</h2>
-          {sortedDates.map((date) => (
-            <div
-              key={date.date.toDate().toString()}
-              className={
-                date.available ? "schedule_time" : "schedule_time_unavailable"
-              }
-            >
-              <span>
-                {date.date
-                  .toDate()
-                  .toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
-              </span>
-            </div>
-          ))}
+        <div key={formattedDate} className="schedule_time">
+          <div className="schedule_weekday">{formattedWeekday}</div>
+          <div className="schedule_day">{formattedDate}</div>
+          <div className="schedule_times">{timesList}</div>
         </div>
       );
     });
@@ -78,7 +108,7 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
         <button onClick={handlePreviousDates}>&lt;</button>
         <button onClick={handleNextDates}>&gt;</button>
       </div>
-      {renderDates()}
+      <div className="schedule_day_labels">{renderDates()}</div>
     </div>
   );
 };

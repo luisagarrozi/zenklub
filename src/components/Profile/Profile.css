@@ -3,13 +3,14 @@
   padding: 34px 20px 20px;
   background-color: #fff;
   box-shadow: 0 2px 4px #0000001a, 0 3px 10px #0000001a;
+  display: flex;
 }
 
 .profile {
   display: flex;
   color: #4d5c65;
   flex-direction: column;
-  width: 60%;
+  width: 50%;
 }
 
 .profile_top {
