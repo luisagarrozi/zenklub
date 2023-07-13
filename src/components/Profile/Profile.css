@@ -26,7 +26,8 @@
   border-radius: 90px;
 }
 
-.profile_name, .profile_profession_and_location {
+.profile_name,
+.profile_profession_and_location {
   margin: 0 0 5px;
   display: flex;
   align-items: center;
@@ -36,10 +37,10 @@
 }
 
 .profile_profession {
- color: #6732D1;
- text-transform: uppercase;
- font-size: 16px; 
- margin-right: 3px;
+  color: #6732d1;
+  text-transform: uppercase;
+  font-size: 16px;
+  margin-right: 3px;
 }
 
 .profile_location {
@@ -60,4 +61,12 @@
 
 .profile_sessionTime {
   font-size: 14px;
+}
+
+.profile_description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

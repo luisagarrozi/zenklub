@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./Reviews.css"
 import { HalfStar } from "../../assets/halfStar";
 import { FullStar } from "../../assets/fullStar";
 import { EmptyStar } from "../../assets/emptyStar";
@@ -59,7 +60,7 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
     <div>
       <div className="reviews_button" onClick={openModal}>
         <div className="reviews_button_stars">{renderStars(calculateAverageRating())}</div>
-        <div className="reviews_button_count">({reviews.length} reviews)</div>
+        <div className="reviews_button_count">({reviews.length} {reviews.length === 1 ? 'review' : 'reviews'})</div>
       </div>
       {modalOpen && (
         <div className="reviews_modal">
@@ -69,14 +70,13 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
             </span>
             <h2 className="reviews_modal_title">Reviews</h2>
             {reviews.map((review, index) => (
-              <div className="reviews" key={index}>
+              <div className="reviews_content" key={index}>
+                <div className="reviews_reviewer">{review.reviewer}</div>
                 <div className="reviews_rating">
                   {renderStars(review.rating)}
                 </div>
-                <div className="reviews_details">
-                  <div className="reviews_reviewer">{review.reviewer}</div>
+                  
                   <div className="reviews_text">{review.review}</div>
-                </div>
               </div>
             ))}
           </div>

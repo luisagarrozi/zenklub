@@ -1,0 +1,44 @@
+.reviews_button {
+  display: flex;
+  cursor: pointer;
+}
+
+.reviews_button_count {
+  margin-left: 5px;
+  font-size: 12px;
+}
+.reviews_modal {
+  z-index: 2;
+  position: absolute;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #000;
+  width: 900px;
+  height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.reviews_modal_content {
+margin-top: -10px;
+padding: 0 10px 10px;
+}
+
+.reviews_modal_close {
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.reviews_content {
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px #0000001a, 0 3px 10px #0000001a;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.reviews_reviewer {
+  font-weight: 700px;
+}
