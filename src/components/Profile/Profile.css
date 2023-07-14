@@ -70,4 +70,21 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  text-align: justify;
+}
+@media screen and (max-width: 768px) {
+  .profile-container {
+    padding: 20px 12px 12px;
+    flex-direction:column;
+  }
+
+  .profile {
+    width: 265px;
+    margin: 0 auto;
+  }
+
+  .profile_top {
+    flex-direction: column;
+    align-items: center;
+  }
 }

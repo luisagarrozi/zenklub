@@ -42,3 +42,9 @@ padding: 0 10px 10px;
 .reviews_reviewer {
   font-weight: 700px;
 }
+
+@media screen and (max-width:768px) {
+  .reviews_modal {
+    width: 250px;
+  } 
+}

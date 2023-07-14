@@ -107,3 +107,19 @@ font-weight: 700;
   width: 60px;
   margin-bottom: 4px;
 }
+
+@media screen and (max-width: 768px) {
+  .schedule {
+    width: 255px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .schedule_day_labels {
+    width: 255px; 
+  }
+
+  .schedule_confirmed, .schedule_confirmation {
+    width: 250px;
+  }
+}
