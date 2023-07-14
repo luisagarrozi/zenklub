@@ -44,6 +44,27 @@
   background-color: #edf2f5;
 }
 
+.schedule_confirmation {
+flex-direction: column;
+}
+
+.schedule_confirm {
+  background-color: #5127a4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  padding: 7px 12px;
+  margin-bottom: 4px;
+}
+
+.schedule_deny {
+  background-color: #D6CCF8;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  padding: 7px 12px;
+} 
 .schedule_confirmed_close {
 position: absolute;
 top: 12px;
