@@ -19,7 +19,7 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule, professionalId }) => {
   const currentDate = new Date();
   const [startDateIndex, setStartDateIndex] = useState(0);
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [itemId, setiItemId] = useState('');
+  const [itemId, setiItemId] = useState("");
   const [confirmationMessage, setConfirmationMessage] = useState(false);
 
   for (let i = 0; i < 30; i++) {
@@ -40,9 +40,6 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule, professionalId }) => {
     "10:30",
     "11:00",
     "11:30",
-    "14:00",
-    "14:30",
-    "15:00",
   ];
 
   const modifiedSchedule = schedule.map(({ available, date, id }) => {
@@ -68,19 +65,19 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule, professionalId }) => {
   };
 
   const setSchedule = async () => {
-    setConfirmationModal(false)
-      const scheduleRef = doc(
-        db,
-        "professionals",
-        `${ professionalId }`,
-        "schedule",
-        `${ itemId }`
-      );
+    setConfirmationModal(false);
+    const scheduleRef = doc(
+      db,
+      "professionals",
+      `${professionalId}`,
+      "schedule",
+      `${itemId}`
+    );
 
-      await updateDoc(scheduleRef, {
-        available: false
-      });
-      setConfirmationMessage(true)
+    await updateDoc(scheduleRef, {
+      available: false,
+    });
+    setConfirmationMessage(true);
   };
 
   const renderDates = () => {
@@ -107,15 +104,19 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule, professionalId }) => {
 
         const handleSchedule = () => {
           if (hasItem && hasItem.available) {
-            setiItemId(hasItem.id)
-            setConfirmationModal(true)
+            setiItemId(hasItem.id);
+            setConfirmationModal(true);
           }
         };
 
         return (
           <div
             key={timeItem}
-            className="schedule_timeslot"
+            className={
+              hasItem && hasItem.available === true
+                ? "schedule_timeslot"
+                : "schedule_unavailable"
+            }
             onClick={() => handleSchedule()}
           >
             {hasItem && hasItem.available === true ? timeItem : "-"}
@@ -135,28 +136,44 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule, professionalId }) => {
 
   return (
     <div className="schedule_container">
-      <div className="calendar_navigation">
+      <div className="schedule_header">
+        <p className="schedule_title">Schedule your session!</p>
+        <p className="schedule_timezone">Timezone: São Paulo (-3)</p>
+      </div>
+      <div className="schedule_navigation">
         <button onClick={handlePreviousDates}>&lt;</button>
         <button onClick={handleNextDates}>&gt;</button>
       </div>
       <div className="schedule_day_labels">{renderDates()}</div>
       {confirmationModal && (
-            <div className="schedule_confirmation">
-              <p className="schedule_confirmation_text">
-                Deseja agendar este horário?
-              </p>
-              <button className="schedule_confirm" onClick={setSchedule}>
-                Sim
-              </button>
-              <button
-                className="schedule_deny"
-                onClick={() => setConfirmationModal(false)}
-              >
-                Não
-              </button>
-            </div>
-          )}
-          {confirmationMessage && (<div className="schedule_confirmation_message">Horário agendado com sucesso!</div>)}
+        <div className="schedule_confirmation">
+          <p className="schedule_confirmation_text">
+            Deseja agendar este horário?
+          </p>
+          <button className="schedule_confirm" onClick={setSchedule}>
+            Sim
+          </button>
+          <button
+            className="schedule_deny"
+            onClick={() => setConfirmationModal(false)}
+          >
+            Não
+          </button>
+        </div>
+      )}
+      {confirmationMessage && (
+        <div className="schedule_confirmed">
+          <div className="schedule_confirmation_message">
+            Horário agendado com sucesso!
+          </div>
+          <button
+            className="schedule_confirmed_close"
+            onClick={() => setConfirmationMessage(false)}
+          >
+            X
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,24 @@
 .schedule {
-  width: 50%;
+  width: 400px;
   padding-left: 20px;
+  position: relative;
+}
+.schedule_header {
+  background-color: #5127a4;
+  color: white;
+  text-align: center;
+  padding: 5px 0;
+}
+
+.schedule_timezone {
+  font-size: 14px;
+  margin: 0
+}
+
+.schedule_title {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
 }
 .schedule_day_labels {
   display: flex;
@@ -11,4 +29,60 @@
 
 .schedule_timeslot {
   cursor: pointer;
+}
+
+.schedule_confirmed, .schedule_confirmation {
+  position: absolute;
+  top: 75px;
+  width: 418px;
+  height: 130px;
+  box-shadow: 0 2px 4px #0000001a, 0 3px 10px #0000001a;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #edf2f5;
+}
+
+.schedule_confirmed_close {
+position: absolute;
+top: 12px;
+right: 20px;
+border: none;
+background-color: transparent;
+font-weight: 700;
+}
+
+.schedule_navigation {
+  display: flex;
+  justify-content:space-between;
+  background-color: #5127a4;
+  border: none;
+}
+
+.schedule_navigation button {
+  background-color: #fff;
+  border: none;
+  border-radius: 40px;
+  height: 20px;
+  width: 20px;
+  margin: -10px 5px 5px;
+  cursor: pointer;
+}
+
+.schedule_weekday {
+ font-size: 12px;
+ color:#5127a4;
+}
+.schedule_day {
+  font-size: 14px;
+  color:#5127a4;
+  font-weight: 500;
+}
+
+.schedule_unavailable, .schedule_timeslot {
+  padding: 4px 0;
+  background-color:  #edf2f5;
+  width: 60px;
+  margin-bottom: 4px;
 }
