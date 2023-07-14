@@ -1,21 +1,26 @@
 import { useState } from "react";
-import { Timestamp } from "firebase/firestore";
+import { Timestamp, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 import "./Schedule.css";
 
 export interface Dates {
   available: boolean;
   date: Timestamp;
+  id: string;
 }
 
 interface ScheduleProps {
   schedule: Dates[];
+  professionalId: string;
 }
 
-const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
+const Schedule: React.FC<ScheduleProps> = ({ schedule, professionalId }) => {
   const nextMonth: Date[] = [];
   const currentDate = new Date();
-  const datesArray: Date[] = [];
   const [startDateIndex, setStartDateIndex] = useState(0);
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  const [itemId, setiItemId] = useState('');
+  const [confirmationMessage, setConfirmationMessage] = useState(false);
 
   for (let i = 0; i < 30; i++) {
     const date = new Date(
@@ -40,11 +45,12 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
     "15:00",
   ];
 
-  const modifiedSchedule = schedule.map(({ available, date }) => {
+  const modifiedSchedule = schedule.map(({ available, date, id }) => {
     const convertedDate = date.toDate();
 
     return {
       available,
+      id,
       date: convertedDate,
     };
   });
@@ -61,6 +67,22 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
     }
   };
 
+  const setSchedule = async () => {
+    setConfirmationModal(false)
+      const scheduleRef = doc(
+        db,
+        "professionals",
+        `${ professionalId }`,
+        "schedule",
+        `${ itemId }`
+      );
+
+      await updateDoc(scheduleRef, {
+        available: false
+      });
+      setConfirmationMessage(true)
+  };
+
   const renderDates = () => {
     const visibleTimes = nextMonth.slice(startDateIndex, startDateIndex + 4);
 
@@ -74,20 +96,29 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
       });
 
       const timesList = timeRange.map((timeItem) => {
-        const isAvailable = modifiedSchedule.find(
+        const hasItem = modifiedSchedule.find(
           (scheduleItem) =>
             scheduleItem.date.getDate() === time.getDate() &&
-            scheduleItem.date.getHours() === parseInt(timeItem.split(":")[0], 10)
+            scheduleItem.date.getHours() ===
+              parseInt(timeItem.split(":")[0], 10) &&
+            scheduleItem.date.getMinutes() ===
+              parseInt(timeItem.split(":")[1], 10)
         );
-      
+
+        const handleSchedule = () => {
+          if (hasItem && hasItem.available) {
+            setiItemId(hasItem.id)
+            setConfirmationModal(true)
+          }
+        };
+
         return (
           <div
             key={timeItem}
-            className={`schedule_time_slot ${
-              isAvailable ? "available" : "unavailable"
-            }`}
+            className="schedule_timeslot"
+            onClick={() => handleSchedule()}
           >
-            {isAvailable ? timeItem : "-"}
+            {hasItem && hasItem.available === true ? timeItem : "-"}
           </div>
         );
       });
@@ -109,6 +140,23 @@ const Schedule: React.FC<ScheduleProps> = ({ schedule }) => {
         <button onClick={handleNextDates}>&gt;</button>
       </div>
       <div className="schedule_day_labels">{renderDates()}</div>
+      {confirmationModal && (
+            <div className="schedule_confirmation">
+              <p className="schedule_confirmation_text">
+                Deseja agendar este horário?
+              </p>
+              <button className="schedule_confirm" onClick={setSchedule}>
+                Sim
+              </button>
+              <button
+                className="schedule_deny"
+                onClick={() => setConfirmationModal(false)}
+              >
+                Não
+              </button>
+            </div>
+          )}
+          {confirmationMessage && (<div className="schedule_confirmation_message">Horário agendado com sucesso!</div>)}
     </div>
   );
 };

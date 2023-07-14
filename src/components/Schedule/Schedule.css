@@ -8,3 +8,7 @@
   justify-content: space-between;
   text-align: center;
 }
+
+.schedule_timeslot {
+  cursor: pointer;
+}

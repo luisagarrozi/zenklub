@@ -50,7 +50,7 @@ const Profile: React.FC<ProfessionalItemProps> = ({ professional }) => {
         <p className="profile_description">{professional.description}</p>
       </div>
       <div className="schedule">
-        <Schedule schedule={professional.schedule}/>
+        <Schedule schedule={professional.schedule} professionalId={professional.id}/>
       </div>
     </div>
   );
